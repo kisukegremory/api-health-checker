@@ -6,17 +6,18 @@ from db_store import SqliteDataStore
 def main():
     data_storage = SqliteDataStore()
     #data_storage.createTableIfNotExists()
-    s = Listener(url="https://viacep.com.br/ws/01001000/json/")
-    #s = Listener(url="https://pokeapi.co/api/v2/pokemon/ditto")
-    watcher = EndpointWatcher(s)
+    endpoint_list = [
+        Listener(url="https://viacep.com.br/ws/01001000/json/"),
+        Listener(url="https://pokeapi.co/api/v2/pokemon/ditto")
+    ]
+    watch_list = [EndpointWatcher(endpoint) for endpoint in endpoint_list]        
 
     for _ in range(1,10):
-        response = watcher.watch()
-        if response.status_code not in (200,201):
-            print("Alert!")
-
-        data_storage.storeData(tuple(response.values()))
-
+        for watcher in watch_list:
+            response = watcher.watch()
+            if response['status_code'] not in (200,201):
+                print("Alert!")
+            data_storage.storeData(tuple(response.values()))
         sleep(5)
 
 
