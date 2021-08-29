@@ -1,7 +1,10 @@
 from time import sleep
-from endpoint_listener import Listener
-from watcher import EndpointWatcher
-from db_store import SqliteDataStore
+from src.endpoint_listener import Listener
+from src.watcher import EndpointWatcher
+from src.db_store import SqliteDataStore
+import logging
+
+logging.basicConfig(filename="log.log")
 
 def main():
     data_storage = SqliteDataStore()

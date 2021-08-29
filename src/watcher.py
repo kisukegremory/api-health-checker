@@ -2,7 +2,7 @@ from endpoint_listener import Listener
 from datetime import datetime
 
 class EndpointWatcher:
-    def __init__(self,listener:Listener):
+    def __init__(self, listener: Listener):
         self.listener = listener
 
     def watch(self):
